@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Box, IconButton, Stack, Typography, alpha, useMediaQuery, useTheme } from '@mui/material'
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined'
 import { loginSlides, type LoginSlide } from '@/components/ui/loginSlidesData'
+import { CurtainText } from '@/components/ui/CurtainText'
 
 interface LoginSlideshowProps {
   slides?: LoginSlide[]
@@ -161,17 +162,17 @@ export function LoginSlideshow({ slides = loginSlides, intervalMs = 6000 }: Logi
         >
           <ShieldOutlinedIcon sx={{ color: '#FFFFFF', fontSize: 22 }} />
         </Box>
-        <Typography
-          variant="h1"
-          sx={{
-            color: '#FFFFFF',
-            fontSize: '1.75rem',
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          Harborline
-        </Typography>
+        <CurtainText
+          text="Harborline"
+          direction="up"
+          baseColor="#FFFFFF"
+          activeColor="#FAFAFA"
+          fontSize="1.75rem"
+          fontClass="font-bold"
+          durationMs={350}
+          staggerMs={35}
+          tracking=""
+        />
       </Box>
 
       {/* Bottom Content & Navigation */}
@@ -207,7 +208,7 @@ export function LoginSlideshow({ slides = loginSlides, intervalMs = 6000 }: Logi
           <Typography
             variant="body1"
             sx={{
-              color: theme.palette.primary.light,
+              color: alpha('#FFFFFF', 0.85),
               fontSize: '1.05rem',
               lineHeight: 1.5,
               textShadow: '0 1px 4px rgba(0,0,0,0.3)',

@@ -14,12 +14,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthLayout } from '@/pages/auth/AuthLayout'
 import { SectionCard } from '@/components/ui/SectionCard'
+import { CurtainText } from '@/components/ui/CurtainText'
 import { useAuth } from '@/auth/useAuth'
 
 const schema = z.object({
@@ -35,6 +37,8 @@ type LoginValues = {
 }
 
 export function LoginPage() {
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
   const navigate = useNavigate()
   const location = useLocation()
   const { login } = useAuth()
@@ -73,8 +77,20 @@ export function LoginPage() {
           sx={{ width: 'min(100%, 420px)' }}
         >
           <Box>
-            <Typography variant="h1">Welcome back</Typography>
-            <Typography color="text.secondary">Sign in to your Harborline workspace.</Typography>
+            <CurtainText
+              text="Welcome back"
+              direction="up"
+              baseColor={isDark ? '#FAFAFA' : '#1F2937'}
+              activeColor={isDark ? '#38BDF8' : '#3B5BDB'}
+              fontSize="1.625rem"
+              fontClass="font-bold"
+              durationMs={350}
+              staggerMs={35}
+              tracking=""
+            />
+            <Typography color="text.secondary" sx={{ mt: 0.75 }}>
+              Sign in to your Harborline workspace.
+            </Typography>
           </Box>
           {error && <Alert severity="error">{error}</Alert>}
           <TextField

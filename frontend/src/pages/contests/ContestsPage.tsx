@@ -113,7 +113,13 @@ function ContestCard({
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <Avatar sx={{ bgcolor: 'primary.light', color: 'primary.dark', fontWeight: 700 }}>
+              <Avatar
+                sx={{
+                  bgcolor: (t) => (t.palette.mode === 'dark' ? '#27272A' : '#E5E7EB'),
+                  color: 'text.primary',
+                  fontWeight: 700,
+                }}
+              >
                 {companyInitials(contest.company)}
               </Avatar>
               <Box>

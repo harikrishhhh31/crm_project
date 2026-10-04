@@ -1,10 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { CssBaseline, ThemeProvider } from '@mui/material'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import '@fontsource-variable/inter'
-import { theme } from '../theme'
+import { ThemeModeProvider } from '@/theme/ThemeModeProvider'
 import App from '@/App'
 import '@/index.css'
 import { RoleProvider } from '@/layout/RoleProvider'
@@ -15,8 +14,7 @@ const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ThemeModeProvider>
       <SnackbarProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
@@ -28,6 +26,6 @@ createRoot(document.getElementById('root')!).render(
           </BrowserRouter>
         </QueryClientProvider>
       </SnackbarProvider>
-    </ThemeProvider>
+    </ThemeModeProvider>
   </StrictMode>,
 )

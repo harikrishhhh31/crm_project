@@ -417,7 +417,8 @@ function ProfileDocument({ data }: { data: CustomerSummary }) {
       <Paper className="customer-print-header customer-print-section" sx={{ overflow: 'hidden' }}>
         <Box
           sx={{
-            bgcolor: 'primary.light',
+            bgcolor: (t) =>
+              t.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.03)',
             p: { xs: 2, md: 3 },
             display: 'flex',
             alignItems: { xs: 'flex-start', sm: 'center' },
@@ -427,7 +428,15 @@ function ProfileDocument({ data }: { data: CustomerSummary }) {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Avatar sx={{ width: 56, height: 56, bgcolor: 'primary.main' }}>
+            <Avatar
+              sx={{
+                width: 56,
+                height: 56,
+                bgcolor: (t) => (t.palette.mode === 'dark' ? '#27272A' : '#18181B'),
+                color: '#FAFAFA',
+                fontWeight: 700,
+              }}
+            >
               {initials(data.customer.name)}
             </Avatar>
             <Box>

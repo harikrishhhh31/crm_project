@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import type { ReactNode } from 'react'
 import { LoginSlideshow } from '@/components/ui/LoginSlideshow'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function AuthLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,6 +11,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: 'minmax(0, 1.15fr) minmax(420px, 0.85fr)' },
         bgcolor: 'background.default',
+        position: 'relative',
       }}
     >
       <Box
@@ -22,6 +24,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
       </Box>
       <Box
         sx={{
+          position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -29,6 +32,9 @@ export function AuthLayout({ children }: { children: ReactNode }) {
           overflowY: 'auto',
         }}
       >
+        <Box sx={{ position: 'absolute', top: { xs: 12, sm: 20 }, right: { xs: 12, sm: 20 } }}>
+          <ThemeToggle />
+        </Box>
         {children}
       </Box>
     </Box>

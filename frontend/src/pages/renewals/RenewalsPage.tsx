@@ -159,9 +159,10 @@ export function RenewalsPage() {
             sx={{
               width: 30,
               height: 30,
-              bgcolor: 'primary.light',
-              color: 'primary.dark',
+              bgcolor: (t) => (t.palette.mode === 'dark' ? '#27272A' : '#E5E7EB'),
+              color: 'text.primary',
               fontSize: 12,
+              fontWeight: 600,
             }}
           >
             {initials(row.customer)}
@@ -306,7 +307,15 @@ export function RenewalsPage() {
           <Tab label="All Renewals" />
           <Tab
             label={
-              <Badge badgeContent={stats.exceptions} color="primary">
+              <Badge
+                badgeContent={stats.exceptions}
+                sx={{
+                  '& .MuiBadge-badge': {
+                    bgcolor: (t) => (t.palette.mode === 'dark' ? '#3F3F46' : '#18181B'),
+                    color: '#FAFAFA',
+                  },
+                }}
+              >
                 Exceptions
               </Badge>
             }
@@ -345,7 +354,12 @@ export function RenewalsPage() {
                   }
                   sx={{
                     '& .renewal-locked': { bgcolor: 'locked.light' },
-                    '& .renewal-urgent:hover, & .renewal-soon:hover': { bgcolor: 'primary.light' },
+                    '& .renewal-urgent:hover, & .renewal-soon:hover': {
+                      bgcolor: (t) =>
+                        t.palette.mode === 'dark'
+                          ? 'rgba(255, 255, 255, 0.04)'
+                          : 'rgba(0, 0, 0, 0.03)',
+                    },
                     '& .MuiDataGrid-cell:focus, & .MuiDataGrid-cell:focus-within': {
                       outline: 'none',
                     },

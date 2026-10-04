@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
 import RestartAltRoundedIcon from '@mui/icons-material/RestartAltRounded'
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded'
 import {
@@ -10,6 +12,8 @@ import {
   Chip,
   FormControlLabel,
   Paper,
+  Radio,
+  RadioGroup,
   Stack,
   Switch,
   Tab,
@@ -17,6 +21,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { useThemeMode } from '@/theme/useThemeMode'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
@@ -90,6 +95,7 @@ function sampleMessage(value: string, stage: ClaimStage) {
 }
 
 export function SettingsPage() {
+  const { mode, setMode, toggleTheme } = useThemeMode()
   const { isAdmin } = useRole()
   const { showSuccess, showError } = useSnackbar()
   const queryClient = useQueryClient()
@@ -201,6 +207,7 @@ export function SettingsPage() {
         >
           <Tab label="Claim Updates" />
           <Tab label="Users" />
+          <Tab label="Appearance" />
         </Tabs>
       </Box>
 
@@ -474,6 +481,189 @@ export function SettingsPage() {
       )}
 
       {selectedTab === 1 && <UsersSection />}
+
+      {selectedTab === 2 && (
+        <Stack spacing={3}>
+          <SectionCard
+            title="Interface Theme"
+            subtitle="Customize the workspace appearance. Changes apply across all screens instantly."
+          >
+            <Stack spacing={3}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 2,
+                  flexWrap: 'wrap',
+                }}
+              >
+                <Box>
+                  <Typography variant="h3">Dark mode</Typography>
+                  <Typography color="text.secondary">
+                    Use high-contrast dark theme to reduce eye strain in low-light environments.
+                  </Typography>
+                </Box>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={mode === 'dark'}
+                      onChange={toggleTheme}
+                      slotProps={{ input: { 'aria-label': 'Toggle dark mode' } }}
+                    />
+                  }
+                  label={mode === 'dark' ? 'Dark theme' : 'Light theme'}
+                />
+              </Box>
+
+              <RadioGroup
+                value={mode}
+                onChange={(event) => setMode(event.target.value as 'light' | 'dark')}
+                aria-label="Theme mode selection"
+              >
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' },
+                    gap: 2.5,
+                  }}
+                >
+                  <Paper
+                    onClick={() => setMode('light')}
+                    sx={{
+                      p: 2.5,
+                      cursor: 'pointer',
+                      borderRadius: 2,
+                      border: 2,
+                      borderColor: mode === 'light' ? 'primary.main' : 'divider',
+                      bgcolor: '#FFFFFF',
+                      color: '#1F2937',
+                      transition: 'all 160ms ease',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                      },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: 2,
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <LightModeRoundedIcon sx={{ color: '#D97706' }} />
+                        <Typography variant="h3" sx={{ color: '#1F2937' }}>
+                          Light Theme
+                        </Typography>
+                      </Box>
+                      <Radio checked={mode === 'light'} value="light" sx={{ p: 0 }} />
+                    </Box>
+                    <Typography variant="body2" sx={{ color: '#667085', mb: 2 }}>
+                      Clean, high-clarity interface optimized for bright workspaces and daytime use.
+                    </Typography>
+                    <Box
+                      sx={{
+                        p: 1.5,
+                        borderRadius: 1.5,
+                        bgcolor: '#F6F7FB',
+                        border: '1px solid #E5E7EF',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1.5,
+                      }}
+                    >
+                      <Box sx={{ width: 28, height: 28, borderRadius: 1, bgcolor: '#18181B' }} />
+                      <Box sx={{ flex: 1 }}>
+                        <Box
+                          sx={{
+                            width: '60%',
+                            height: 6,
+                            bgcolor: '#CBD5E1',
+                            borderRadius: 1,
+                            mb: 0.75,
+                          }}
+                        />
+                        <Box
+                          sx={{ width: '40%', height: 6, bgcolor: '#E2E8F0', borderRadius: 1 }}
+                        />
+                      </Box>
+                    </Box>
+                  </Paper>
+
+                  <Paper
+                    onClick={() => setMode('dark')}
+                    sx={{
+                      p: 2.5,
+                      cursor: 'pointer',
+                      borderRadius: 2,
+                      border: 2,
+                      borderColor: mode === 'dark' ? 'primary.main' : 'divider',
+                      bgcolor: '#09090B',
+                      color: '#FAFAFA',
+                      transition: 'all 160ms ease',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                      },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: 2,
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <DarkModeRoundedIcon sx={{ color: '#FBBF24' }} />
+                        <Typography variant="h3" sx={{ color: '#FAFAFA' }}>
+                          Dark Theme
+                        </Typography>
+                      </Box>
+                      <Radio checked={mode === 'dark'} value="dark" sx={{ p: 0 }} />
+                    </Box>
+                    <Typography variant="body2" sx={{ color: '#A1A1AA', mb: 2 }}>
+                      Deep neutral zinc dark theme tailored for high contrast and reduced eye
+                      strain.
+                    </Typography>
+                    <Box
+                      sx={{
+                        p: 1.5,
+                        borderRadius: 1.5,
+                        bgcolor: '#18181B',
+                        border: '1px solid #27272A',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1.5,
+                      }}
+                    >
+                      <Box sx={{ width: 28, height: 28, borderRadius: 1, bgcolor: '#FAFAFA' }} />
+                      <Box sx={{ flex: 1 }}>
+                        <Box
+                          sx={{
+                            width: '60%',
+                            height: 6,
+                            bgcolor: '#3F3F46',
+                            borderRadius: 1,
+                            mb: 0.75,
+                          }}
+                        />
+                        <Box
+                          sx={{ width: '40%', height: 6, bgcolor: '#27272A', borderRadius: 1 }}
+                        />
+                      </Box>
+                    </Box>
+                  </Paper>
+                </Box>
+              </RadioGroup>
+            </Stack>
+          </SectionCard>
+        </Stack>
+      )}
     </Stack>
   )
 }

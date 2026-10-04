@@ -28,6 +28,8 @@ import { CardSkeleton, SummarySkeleton, TableSkeleton } from '@/components/ui/Sk
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { CurrencyText } from '@/components/ui/CurrencyText'
 import { DateText } from '@/components/ui/DateText'
+import { LeadsTable } from '@/components/ui/leads-data-table'
+import { ContactsTable } from '@/components/ui/contacts-table-with-modal'
 
 const statusVariants: StatusVariant[] = [
   'success',
@@ -153,6 +155,20 @@ export function DesignSystemPage() {
           </Grid>
         </Stack>
       </SectionCard>
+      <SectionCard
+        title="Leads Data Table"
+        subtitle="Interactive leads data table with animated actions, sparklines, and bulk selection."
+      >
+        <LeadsTable />
+      </SectionCard>
+
+      <SectionCard
+        title="Contacts Table with Modal"
+        subtitle="Full-featured contacts table with connection strength pills, sorting, filters, export (CSV/JSON), and detail modal."
+      >
+        <ContactsTable />
+      </SectionCard>
+
       <SectionCard title="Loading and dialog">
         <Stack spacing={3}>
           <SummarySkeleton />

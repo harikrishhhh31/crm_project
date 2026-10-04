@@ -36,6 +36,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import type { Role } from '@/types/crm'
 import { useRole } from '@/layout/useRole'
 import { useAuth } from '@/auth/useAuth'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 interface NavItem {
   href: string
@@ -97,12 +98,12 @@ export function AppLayout() {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minHeight: 48, px: 1, mb: 3 }}>
-        <DashboardRoundedIcon color="primary" />
+        <DashboardRoundedIcon sx={{ color: 'text.primary' }} />
         <Typography
           sx={{
             display: { xs: 'block', md: showLabels ? 'block' : 'none' },
             fontWeight: 700,
-            color: 'primary.dark',
+            color: 'text.primary',
             whiteSpace: 'nowrap',
           }}
         >
@@ -138,10 +139,19 @@ export function AppLayout() {
                   borderRadius: 1,
                   color: 'text.secondary',
                   textDecoration: 'none',
-                  '&:hover': { bgcolor: 'primary.light', color: 'primary.dark' },
+                  '&:hover': {
+                    bgcolor: (t) =>
+                      t.palette.mode === 'dark'
+                        ? 'rgba(255, 255, 255, 0.06)'
+                        : 'rgba(0, 0, 0, 0.04)',
+                    color: 'text.primary',
+                  },
                   '&.active': {
-                    bgcolor: 'primary.light',
-                    color: 'primary.dark',
+                    bgcolor: (t) =>
+                      t.palette.mode === 'dark'
+                        ? 'rgba(255, 255, 255, 0.1)'
+                        : 'rgba(0, 0, 0, 0.06)',
+                    color: 'text.primary',
                     '&:before': {
                       content: '""',
                       position: 'absolute',
@@ -150,7 +160,7 @@ export function AppLayout() {
                       bottom: 8,
                       width: 3,
                       borderRadius: 2,
-                      bgcolor: 'primary.main',
+                      bgcolor: (t) => (t.palette.mode === 'dark' ? '#FAFAFA' : '#18181B'),
                     },
                   },
                 }}
@@ -182,7 +192,16 @@ export function AppLayout() {
           justifyContent: { xs: 'flex-start', md: showLabels ? 'flex-start' : 'center' },
         }}
       >
-        <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main', fontSize: 13 }}>
+        <Avatar
+          sx={{
+            width: 32,
+            height: 32,
+            bgcolor: (t) => (t.palette.mode === 'dark' ? '#27272A' : '#18181B'),
+            color: '#FFFFFF',
+            fontSize: 13,
+            fontWeight: 600,
+          }}
+        >
           {initials}
         </Avatar>
         <Box sx={{ display: { xs: 'block', md: showLabels ? 'block' : 'none' }, minWidth: 0 }}>
@@ -245,6 +264,8 @@ export function AppLayout() {
           />
 
           <Box sx={{ flexGrow: 1 }} />
+
+          <ThemeToggle />
 
           <IconButton aria-label="Notifications">
             <NotificationsNoneRoundedIcon />
