@@ -4,3 +4,10 @@ dist/
 *.log
 .DS_Store
 coverage/
+
+.agents/
+.claude/
+.cursor/
+.devin/
+dist/
+uploads/
