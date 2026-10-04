@@ -219,7 +219,15 @@ export function RenewalsPage() {
       minWidth: 120,
       sortable: false,
       renderCell: ({ row }) => (
-        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            height: '100%',
+            gap: 0.5,
+            flexWrap: 'wrap',
+          }}
+        >
           {row.portabilityLocked && <StatusChip label="Locked" status="locked" />}
           {row.isException && <StatusChip label="Exception" status="exception" />}
         </Box>
