@@ -8,6 +8,7 @@ import { RenewalsPage } from '@/pages/renewals/RenewalsPage'
 import { CustomersPage } from '@/pages/customers/CustomersPage'
 import { CustomerDetailPage } from '@/pages/customers/CustomerDetailPage'
 import { ContestsPage } from '@/pages/contests/ContestsPage'
+import { KycUploadPage } from '@/pages/kyc/KycUploadPage'
 import { SettingsPage } from '@/pages/settings/SettingsPage'
 import { DesignSystemPage } from '@/pages/DesignSystemPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="customers" element={<CustomersPage />} />
           <Route path="customers/:id" element={<CustomerDetailPage />} />
           <Route path="contests" element={<ContestsPage />} />
+          <Route path="kyc/upload" element={<KycUploadPage />} />
           <Route path="settings" element={<SettingsPage />} />
           {import.meta.env.DEV && <Route path="design-system" element={<DesignSystemPage />} />}
           <Route path="*" element={<NotFoundPage />} />

@@ -5,6 +5,7 @@ import CampaignRoundedIcon from '@mui/icons-material/CampaignRounded'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
+import VerifiedUserRoundedIcon from '@mui/icons-material/VerifiedUserRounded'
 import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
@@ -46,6 +47,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: '/renewals', label: 'Renewals', icon: AssessmentRoundedIcon },
   { href: '/customers', label: 'Customers', icon: GroupsRoundedIcon },
+  { href: '/kyc/upload', label: 'KYC Upload', icon: VerifiedUserRoundedIcon },
   { href: '/contests', label: 'Contests', icon: CampaignRoundedIcon },
   { href: '/settings', label: 'Settings', icon: SettingsRoundedIcon },
 ]

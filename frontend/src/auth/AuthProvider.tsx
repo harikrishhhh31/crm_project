@@ -52,6 +52,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setExpired(false)
     setUser(null)
     sessionStorage.removeItem(sessionKey)
+    sessionStorage.removeItem('harborline-access-token')
+    sessionStorage.removeItem('harborline-refresh-token')
     navigate('/login', { replace: true })
   }, [navigate])
 
@@ -80,23 +82,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string, remember: boolean) => {
-      await new Promise((resolve) => window.setTimeout(resolve, 400))
-      const account = users.find((item) => item.email.toLowerCase() === email.toLowerCase())
-      if (!account || !account.active || password.length < 8) {
-        return {
-          ok: false,
-          message: 'Invalid email or password. Password must be at least 8 characters.',
+      const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+      try {
+        const res = await fetch(`${apiUrl}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          return { ok: false, message: data.message ?? 'Invalid email or password.' }
         }
+        const backendRole = (data.user.role ?? 'ADVISOR').toLowerCase() as AuthUser['role']
+        const user: AuthUser = {
+          id: data.user.id,
+          name: data.user.name,
+          email: data.user.email,
+          role: backendRole,
+          active: data.user.active ?? true,
+        }
+        setUser(user)
+        setRole(backendRole)
+        sessionStorage.setItem(sessionKey, JSON.stringify(user))
+        sessionStorage.setItem('harborline-access-token', data.accessToken)
+        sessionStorage.setItem('harborline-refresh-token', data.refreshToken)
+        if (remember) {
+          localStorage.setItem('harborline-remember', email)
+        } else {
+          localStorage.removeItem('harborline-remember')
+        }
+        return { ok: true }
+      } catch {
+        return { ok: false, message: 'Unable to reach the server. Try again later.' }
       }
-      setUser(account)
-      setRole(account.role)
-      sessionStorage.setItem(sessionKey, JSON.stringify(account))
-      if (remember) {
-        localStorage.setItem('harborline-remember', account.email)
-      } else {
-        localStorage.removeItem('harborline-remember')
-      }
-      return { ok: true }
     },
     [users, setRole],
   )
