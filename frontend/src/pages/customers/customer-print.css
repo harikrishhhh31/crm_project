@@ -1,0 +1,80 @@
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body,
+  #root {
+    background: #ffffff !important;
+  }
+  body {
+    font-size: 11px !important;
+  }
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  header,
+  aside,
+  .app-sidebar,
+  .app-topbar,
+  .customer-page-header,
+  .customer-print-hidden,
+  .customer-tabs {
+    display: none !important;
+  }
+  .customer-print-shell {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 4px !important;
+  }
+  .customer-print-two-column {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.85fr) !important;
+    gap: 6px !important;
+  }
+  .customer-print-section,
+  .customer-print-header,
+  .customer-print-stat {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .customer-print-header > .MuiBox-root:first-child {
+    padding: 6px !important;
+  }
+  .customer-print-header .MuiAvatar-root {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .customer-print-stat {
+    padding: 6px !important;
+    gap: 6px !important;
+  }
+  .customer-print-shell .MuiCardContent-root {
+    padding: 6px !important;
+  }
+  .customer-print-shell .MuiTableCell-root {
+    padding: 2px 4px !important;
+  }
+  .customer-print-shell .MuiTypography-root {
+    line-height: 1.25 !important;
+  }
+  .customer-print-two-column > .MuiStack-root {
+    gap: 6px !important;
+  }
+  .MuiCard-root,
+  .MuiPaper-root {
+    box-shadow: none !important;
+  }
+  .MuiDataGrid-root {
+    font-size: 11px !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
