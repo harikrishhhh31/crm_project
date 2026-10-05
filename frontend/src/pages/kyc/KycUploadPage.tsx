@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import { SectionCard } from '@/components/ui/SectionCard'
+import { authFetch } from '@/api/authFetch'
 
 type KycResult = {
   fileId: string
@@ -36,17 +37,11 @@ export function KycUploadPage() {
     setError('')
     setLoading(true)
     setResult(null)
-    const token = sessionStorage.getItem('harborline-access-token')
-    const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
     const form = new FormData()
     form.append('file', file)
-    const url = customerId ? `${apiUrl}/kyc/upload?customerId=${encodeURIComponent(customerId)}` : `${apiUrl}/kyc/upload`
+    const url = customerId ? `/kyc/upload?customerId=${encodeURIComponent(customerId)}` : '/kyc/upload'
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-        body: form,
-      })
+      const res = await authFetch(url, { method: 'POST', body: form })
       const data = await res.json()
       if (!res.ok) {
         setError(data.message ?? 'Upload failed.')
